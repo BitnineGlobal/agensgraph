@@ -2118,7 +2118,7 @@ ExecDropStmt(DropStmt *stmt, bool isTopLevel)
 								 errmsg("improper property index name")));
 				}
 			}
-			/* fail through */
+			/* fall through */
 
 		case OBJECT_INDEX:
 			if (stmt->concurrent)
