@@ -8,14 +8,43 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Configure
         env:
           CC: 'clang'
           CXX: 'clang++'
         run: ./configure --enable-cassert --enable-debug
+
+      - name: Build
+        run: make -j$(nproc)
+
+      - name: Regression
+        id: regress
+        continue-on-error: true
+        run: make check -j$(nproc) -C src/bin LC_ALL="C"
+
+      - name: Check on failures
+        if: steps.regress.outcome != 'success'
+        run: cat regress/regression.diffs && exit 1
+
+  build-with-llvm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install LLVM
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y llvm
+
+      - name: Configure
+        env:
+          CC: 'clang'
+          CXX: 'clang++'
+          LLVM_CONFIG: 'llvm-config'
+        run: ./configure --enable-cassert --enable-debug --with-llvm
 
       - name: Build
         run: make -j$(nproc)
