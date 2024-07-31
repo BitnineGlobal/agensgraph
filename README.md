@@ -106,7 +106,7 @@ AgensGraphViewer is a web-based user interface that provides visualization of gr
 - **User-Friendly**: Intuitive interface designed for ease of use.
 - **Real-Time Interaction**: Allows for real-time data updates and interaction with graph data.
 
-<img src="https://bitnine.net/documentations/images/g_result_1.png" alt="AgensGraphViewer Screenshot" width="400" />
+<img src="img/2024-07-31 12-44-44.png" alt="AgensGraphViewer Screenshot" width="400" />
 
 
 
